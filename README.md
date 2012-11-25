@@ -1,4 +1,6 @@
 yarl
 ====
 
-yamm - Yet Another Record Library
+yarl - Yet Another Record Library
+
+Projekt na przedmiot "Obiekty i Bazy Danych".
