@@ -3,4 +3,4 @@ yarl
 
 yarl - Yet Another Record Library
 
-Projekt na przedmiot "Obiekty i Bazy Danych".
+Projekt na przedmioty "Obiekty i Bazy Danych" oraz "Architektura Oprogramowania".
