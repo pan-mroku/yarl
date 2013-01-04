@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "artist.hpp"
+#include "album.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -12,8 +13,18 @@ int main(int argc, char *argv[])
   //w.showMaximized();
     
   //return a.exec();
-  Artist a("asd");
-  const_cast<QString&>(a.Name())[0]='b';
-  std::cout<<a.Name().toStdString() <<std::endl;
+
+  QSharedPointer<Artist> a(new Artist("asd"));
+
+  std::cout<<*a<<std::endl;
+
+  QSharedPointer<Album> aa(new Album("aa",a));
+  QSharedPointer<Album> ab(new Album("aa",{a}));
+
+  const_cast<QString&>(a->Name)[0]='b';
+
+  std::cout<<aa<<std::endl;
+  std::cout<<ab<<std::endl;
+
   return 0;
 }
