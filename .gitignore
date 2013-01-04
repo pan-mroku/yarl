@@ -11,3 +11,15 @@
 *.lai
 *.la
 *.a
+
+#odb
+*.?xx
+
+#cmake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+*.cmake
+
+#binarka
+yarl
