@@ -37,10 +37,16 @@ void populate()
   Artist* b=new Artist("bsd");
   lib->Artists.push_back(a);
   lib->Artists.push_back(b);
+  Album* al=new Album(2005, "alb");
+  Album* alb=new Album(*al);
+  a->Albums.push_back(al);
+  a->Albums.push_back(alb);
   //std::cout<<lib<<std::endl;
     
   odb::core::transaction t (db.begin ());
   //db.persist(root);
+  db.persist(*al);
+  db.persist(*alb);
   db.persist(*a);
   db.persist(*b);
   db.persist(*lib);

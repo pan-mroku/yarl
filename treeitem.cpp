@@ -42,14 +42,14 @@ int TreeItem::Row() const
 std::ostream& operator<<(std::ostream& out, const TreeItem& item)
 {
   for (const std::string* data:item.Data)
-    out<<*data<<std::endl;
+    out<<*data<<" ";
 
   if(item.Children.size()>0)
     {
-      out<<"--->"<<std::endl;
+      out<<std::endl<<"--->"<<std::endl;
       for(const TreeItem* child : item.Children)
         out<<"\t"<<*child;
-      out<<"<---";
+      out<<std::endl<<"<---"<<std::endl;
     }
 
   return out;

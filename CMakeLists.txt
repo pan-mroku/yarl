@@ -9,9 +9,9 @@ INCLUDE_DIRECTORIES(${QT_INCLUDES})
 LINK_DIRECTORIES(${QT_LIBRARY_DIR})
 
 ADD_CUSTOM_COMMAND(
-  OUTPUT artist-odb.hxx artist-odb.cxx artist-odb.ixx library-odb.hxx library-odb.cxx library-odb.ixx
-  COMMAND odb --std c++11 --database sqlite --generate-query --generate-schema artist.hpp library.hpp
-  DEPENDS artist.hpp library.hpp
+  OUTPUT artist-odb.hxx artist-odb.cxx artist-odb.ixx library-odb.hxx library-odb.cxx library-odb.ixx album-odb.hxx album-odb.cxx album-odb.ixx
+  COMMAND odb --std c++11 --database sqlite --generate-query --generate-schema artist.hpp library.hpp album.hpp
+  DEPENDS artist.hpp library.hpp album.hpp
 )
 
 QT4_WRAP_UI(UIS mainwindow.ui)
@@ -22,8 +22,10 @@ ADD_EXECUTABLE(${PROJECT_NAME}
   treeitem.hpp treeitem.cpp 
   artist.hpp artist.cpp artist-odb.hxx artist-odb.cxx 
   library.hpp library.cpp library-odb.hxx library-odb.cxx 
+  album.hpp album.cpp album-odb.hxx album-odb.cxx 
   rootitem.hpp rootitem.cpp 
   artistitem.hpp artistitem.cpp
+  albumitem.hpp albumitem.cpp
   model.hpp model.cpp
   mainwindow.hpp mainwindow.cpp
   ${UIS}

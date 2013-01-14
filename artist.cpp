@@ -5,7 +5,17 @@ Artist::Artist(const std::string& name)
   Name=name;
 }
 
-std::ostream& operator<<(std::ostream& out, const Artist& artist)
+Artist::Artist(const Artist& other)
 {
-  out<<artist.Name<<std::endl;
+  id=other.id;
+  Name=other.Name;
+  for(const Album* album:other.Albums)
+    Albums.push_back(new Album(*album));
+}
+
+Artist::~Artist()
+{
+  for(Album* album:Albums)
+    delete album;
+  Albums.clear();
 }

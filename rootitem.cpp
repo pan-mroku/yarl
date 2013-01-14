@@ -13,7 +13,11 @@ RootItem::RootItem(const Library& library):Library(library), TreeItem()
   Parent=this;
   Data.push_back(&Name);
   for(const Artist* artist:Artists)
-    Children.push_back(new ArtistItem(*artist));
+    {
+      ArtistItem* artistItem=new ArtistItem(*artist);
+      artistItem->Parent=this;
+      Children.push_back(artistItem);
+    }
 }
 
 void RootItem::DetachAll()

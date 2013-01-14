@@ -39,6 +39,8 @@ void Model::LoadDatabase(const QString& filename)
 
   for(Library library:r)
     Root=new RootItem(library);
+
+  //std::cout<<*Root<<std::endl;
 }
 
 QModelIndex Model::index(int row, int column, const QModelIndex& parent) const
@@ -62,34 +64,35 @@ QModelIndex Model::index(int row, int column, const QModelIndex& parent) const
 
 QModelIndex Model::parent(const QModelIndex& index) const
 {
-     if (!index.isValid())
-         return QModelIndex();
+  if (!index.isValid())
+    return QModelIndex();
 
-     TreeItem* childItem = static_cast<TreeItem*>(index.internalPointer());
-     TreeItem* parentItem = childItem->Parent;
+  TreeItem* childItem = static_cast<TreeItem*>(index.internalPointer());
+  TreeItem* parentItem = childItem->Parent;
 
-     if (parentItem == NULL)
-         return QModelIndex();
+  if (parentItem == NULL|| parentItem==Root)
+    return QModelIndex();
 
-     return createIndex(parentItem->Row(), 0, parentItem);
+  return createIndex(parentItem->Row(), 0, parentItem);
 }
 
 int Model::rowCount(const QModelIndex& parent) const
 {
-TreeItem *parentItem;
-     if (parent.column() > 0)
-         return 0;
+  TreeItem *parentItem;
+  if (parent.column() > 0)
+    return 0;
 
-     if (!parent.isValid())
-         parentItem = Root;
-     else
-         parentItem = static_cast<TreeItem*>(parent.internalPointer());
+  if (!parent.isValid())
+    parentItem = Root;
+  else
+    parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
-     return parentItem->Children.size();
+  return parentItem->Children.size();
 }
 
 int Model::columnCount(const QModelIndex& parent) const
 {
+  std::cout<<parent.column()<<std::endl;
   if (parent.isValid())
     return static_cast<TreeItem*>(parent.internalPointer())->Data.size();
   else
@@ -99,15 +102,16 @@ int Model::columnCount(const QModelIndex& parent) const
 
 QVariant Model::data(const QModelIndex& index, int role) const
 {
-     if (!index.isValid())
-         return QVariant();
+  //std::cout<<*Root<<std::endl;
+  if (!index.isValid())
+    return QVariant();
 
-     if (role != Qt::DisplayRole)
-         return QVariant();
+  if (role != Qt::DisplayRole)
+    return QVariant();
 
-     TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+  TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
-     return QString::fromStdString(*item->Data[index.column()]);
+  return QString::fromStdString(*item->Data[index.column()]);
 }
 
 std::ostream& operator<<(std::ostream& out, const Model& model)
