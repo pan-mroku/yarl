@@ -3,20 +3,23 @@
 Album::Album(const QString& title, const QSharedPointer<Artist>& author):Title(title)
 {
   Authors.push_back(author);
-  setText(Title);
+ 
+  //Authors.back()->appendRow(this); //trzeba poczekać aż będziemy mieli model;
 }
 
 Album::Album(const QString& title, const std::initializer_list<QSharedPointer<Artist>>& authors):Title(title)
 {
   for(const QSharedPointer<Artist>& author:authors)
-    this->Authors.push_back(author);
-  setText(Title);
+    {
+      Authors.push_back(author);
+      //Authors.back()->appendRow(this); //jak wyżej
+    }
 }
 
-std::ostream& operator<<(std::ostream& out, const QSharedPointer<Album>& album)
+std::ostream& operator<<(std::ostream& out, const Album& album)
 {
-  for(QSharedPointer<Artist> artist:album->Authors)
+  for(const QSharedPointer<Artist>& artist:album.Authors)
     out<<*artist<<", ";
-  out<<"\""<<album->Title.toStdString()<<"\"";
+  out<<"\""<<album.Title.toStdString()<<"\"";
   return out;
 }

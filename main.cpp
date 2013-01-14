@@ -1,30 +1,97 @@
-//#include <QApplication>
-//#include "mainwindow.hpp"
-
 #include <iostream>
 
+#include <odb/transaction.hxx>
+#include <odb/schema-catalog.hxx>
+#include <odb/sqlite/database.hxx>
+
 #include "artist.hpp"
-#include "album.hpp"
+#include "artist-odb.hxx"
+#include "library.hpp"
+#include "library-odb.hxx"
+
+#include "model.hpp"
+
+void create()
+{
+  std::cout<<"Creation... ";
+  odb::sqlite::database db("test.db", SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+  //odb::connection_ptr c (db.connection ());
+  //c->execute ("PRAGMA foreign_keys=OFF");
+
+  odb::transaction t (db.begin ());
+  odb::schema_catalog::create_schema (db);
+  t.commit ();
+  //c->execute ("PRAGMA foreign_keys=ON");
+  std::cout<<"COMPLETE"<<std::endl;;
+}
+
+void populate()
+{
+  std::cout<<"Populating... ";
+  odb::sqlite::database db("test.db", SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+  
+  Library* lib=new Library("1");
+  Artist* a=new Artist("asd");
+  Artist* b=new Artist("bsd");
+  lib->Artists.push_back(a);
+  lib->Artists.push_back(b);
+  //std::cout<<lib<<std::endl;
+    
+  odb::core::transaction t (db.begin ());
+  //db.persist(root);
+  db.persist(*a);
+  db.persist(*b);
+  db.persist(*lib);
+  delete lib;
+
+  t.commit();
+  std::cout<<"COMPLETE"<<std::endl;;
+}
+
+void query_artists()
+{
+  std::cout<<"Querying Artists... ";
+  odb::sqlite::database db("test.db", SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+
+  odb::core::transaction t (db.begin ());
+
+  odb::result<Artist> r (db.query<Artist>());
+
+  //for(Artist a:r)
+    //std::cout<<a<<std::endl;
+  std::cout<<"COMPLETE";
+}
+
+
+/*void query_albums()
+  {
+  odb::sqlite::database db("test.db", SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+
+  odb::core::transaction t (db.begin ());
+
+  odb::result<Album> r (db.query<Album>(odb::query<Album>::Title=="aab"));
+
+  for(Album a:r)
+  std::cout<<a<<std::endl;
+  }*/
 
 int main(int argc, char *argv[])
 {
+
   //QApplication a(argc, argv);
   //MainWindow w;
   //w.showMaximized();
     
   //return a.exec();
-
-  QSharedPointer<Artist> a(new Artist("asd"));
-
-  std::cout<<*a<<std::endl;
-
-  QSharedPointer<Album> aa(new Album("aa",a));
-  QSharedPointer<Album> ab(new Album("aa",{a}));
-
-  const_cast<QString&>(a->Name)[0]='b';
-
-  std::cout<<aa<<std::endl;
-  std::cout<<ab<<std::endl;
-
+  /*create();
+    query_artists();
+    query_albums();*/
+  //  QSharedPointer<Model> m(new Model());
+  //Model m;
+  create();
+  populate();
+  //query_artists();
+  Model m;
+  std::cout<<m<<std::endl;
   return 0;
 }

@@ -2,27 +2,31 @@
 #define ARTIST_HPP
 
 #include <ostream>
-
-#include <QtGui/QStandardItem>
-#include <QtCore/QString>
+#include <string>
+#include <vector>
 
 #include <odb/core.hxx>
 
 #pragma db object
-class Artist:public QStandardItem
+class Artist
 {
 public:
-  QString Name;
+#pragma db unique
+  std::string Name;
 
-  Artist(const QString& name);
+  //QList<Album*> Albums;
 
-  friend std::ostream& operator<<(std::ostream& out, const Artist& artist);
-private:
-  friend class odb::access;
+  Artist(const std::string& name);
+
+  //friend std::ostream& operator<<(std::ostream& out, const Artist& artist);
+protected:
+#pragma db id auto
+    int id;
+
+  friend class odb::access; //ODB
   Artist(){};
 
-#pragma db unique id auto
-  int id;
+private:
 };
 
 #endif

@@ -1,13 +1,11 @@
 #include "artist.hpp"
 
-Artist::Artist(const QString& name):Name(name)
+Artist::Artist(const std::string& name)
 {
-  setText(Name);
+  Name=name;
 }
 
 std::ostream& operator<<(std::ostream& out, const Artist& artist)
 {
-  out<<artist.Name.toStdString();
-  return out;
+  out<<artist.Name<<std::endl;
 }
-
