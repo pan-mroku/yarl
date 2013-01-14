@@ -3,6 +3,7 @@
 
 #include<vector>
 #include<string>
+#include<QString>
 
 #include<ostream>
 
@@ -19,6 +20,7 @@ public:
   virtual ~TreeItem();
 
   int Row() const;
+  virtual QString QData() const;
   
   /*  virtual int RecreateChildren()=0;
   virtual int RecreateData()=0;*/

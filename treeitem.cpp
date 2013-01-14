@@ -39,6 +39,14 @@ int TreeItem::Row() const
   return 0;
 }
 
+QString TreeItem::QData() const
+{
+  QString out;
+  for(const std::string* element:Data)
+    out+=QString::fromStdString(*element)+" ";
+  return out;
+}
+
 std::ostream& operator<<(std::ostream& out, const TreeItem& item)
 {
   for (const std::string* data:item.Data)

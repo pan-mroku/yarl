@@ -92,7 +92,6 @@ int Model::rowCount(const QModelIndex& parent) const
 
 int Model::columnCount(const QModelIndex& parent) const
 {
-  std::cout<<parent.column()<<std::endl;
   if (parent.isValid())
     return static_cast<TreeItem*>(parent.internalPointer())->Data.size();
   else
@@ -102,7 +101,7 @@ int Model::columnCount(const QModelIndex& parent) const
 
 QVariant Model::data(const QModelIndex& index, int role) const
 {
-  //std::cout<<*Root<<std::endl;
+  std::cout<<index.column()<<" "<<index.row()<<std::endl;
   if (!index.isValid())
     return QVariant();
 
@@ -111,7 +110,7 @@ QVariant Model::data(const QModelIndex& index, int role) const
 
   TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
-  return QString::fromStdString(*item->Data[index.column()]);
+  return item->QData();
 }
 
 std::ostream& operator<<(std::ostream& out, const Model& model)
