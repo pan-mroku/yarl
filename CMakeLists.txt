@@ -14,6 +14,9 @@ ADD_CUSTOM_COMMAND(
   DEPENDS artist.hpp library.hpp
 )
 
+QT4_WRAP_UI(UIS mainwindow.ui)
+QT4_Wrap_CPP(MOCS mainwindow.hpp)
+
 ADD_EXECUTABLE(${PROJECT_NAME} 
   main.cpp 
   treeitem.hpp treeitem.cpp 
@@ -21,5 +24,10 @@ ADD_EXECUTABLE(${PROJECT_NAME}
   library.hpp library.cpp library-odb.hxx library-odb.cxx 
   rootitem.hpp rootitem.cpp 
   artistitem.hpp artistitem.cpp
-  model.hpp model.cpp)
+  model.hpp model.cpp
+  mainwindow.hpp mainwindow.cpp
+  ${UIS}
+  ${MOCS}
+)
+
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${LIBS})

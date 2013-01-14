@@ -9,7 +9,9 @@
 #include "library.hpp"
 #include "library-odb.hxx"
 
-#include "model.hpp"
+#include <QtGui/QApplication>
+//#include "model.hpp"
+#include "mainwindow.hpp"
 
 void create()
 {
@@ -91,7 +93,10 @@ int main(int argc, char *argv[])
   create();
   populate();
   //query_artists();
-  Model m;
-  std::cout<<m<<std::endl;
-  return 0;
+  /*  Model m;
+      std::cout<<m<<std::endl;*/
+  QApplication a(argc, argv);
+  MainWindow w;
+  w.showMaximized();
+  return a.exec();
 }

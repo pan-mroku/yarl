@@ -17,6 +17,8 @@ public:
   TreeItem(TreeItem* parent=NULL);
   TreeItem(const std::initializer_list<std::string>& data, TreeItem* parent=NULL);
   virtual ~TreeItem();
+
+  int Row() const;
   
   /*  virtual int RecreateChildren()=0;
   virtual int RecreateData()=0;*/

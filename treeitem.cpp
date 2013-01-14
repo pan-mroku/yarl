@@ -29,6 +29,16 @@ TreeItem::~TreeItem()
   Data.clear();
 }
 
+int TreeItem::Row() const
+{
+  if (Parent!=NULL)
+    for(int i=0;i<Parent->Children.size();i++)
+      if(Parent->Children[i]==this)
+        return i;
+
+  return 0;
+}
+
 std::ostream& operator<<(std::ostream& out, const TreeItem& item)
 {
   for (const std::string* data:item.Data)
