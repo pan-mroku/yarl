@@ -2,7 +2,6 @@
 
 Album::Album(const int year, const std::string& title):Year(year), Title(title)
 {
-
 }
 
 Album::Album(const Album& other)
@@ -10,4 +9,13 @@ Album::Album(const Album& other)
   id=other.id;
   Year=other.Year;
   Title=other.Title;
+}
+
+Album::Types Album::Type() const
+{
+  return Album::Types::base;
+}
+
+Album::~Album()
+{
 }

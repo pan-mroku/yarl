@@ -1,7 +1,7 @@
 #ifndef ALBUMITEM_HPP
 #define ALBUMITEM_HPP
 
-#include <string>
+#include <QtCore/QString>
 
 #include "treeitem.hpp"
 #include "album.hpp"
@@ -9,8 +9,8 @@
 class AlbumItem:public TreeItem, public Album
 {
 public:
-  std::string Year_str;
   AlbumItem(const Album& album);
+  virtual QString QData() const;
 protected:
 private:
 };

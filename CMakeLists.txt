@@ -8,28 +8,33 @@ FIND_PACKAGE(Qt REQUIRED QtCore QtGui)
 INCLUDE_DIRECTORIES(${QT_INCLUDES})
 LINK_DIRECTORIES(${QT_LIBRARY_DIR})
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT artist-odb.hxx artist-odb.cxx artist-odb.ixx library-odb.hxx library-odb.cxx library-odb.ixx album-odb.hxx album-odb.cxx album-odb.ixx
-  COMMAND odb --std c++11 --database sqlite --generate-query --generate-schema artist.hpp library.hpp album.hpp
-  DEPENDS artist.hpp library.hpp album.hpp
-)
+SET(ODB_CLASSES artist album library cd track)
+
+FOREACH(HPP ${ODB_CLASSES})
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${HPP}-odb.hxx ${HPP}-odb.cxx ${HPP}-odb.ixx 
+    COMMAND odb --std c++11 --database sqlite --generate-query --generate-schema ${HPP}.hpp 
+    DEPENDS ${HPP}.hpp
+    )
+SET(ODB_FILES ${ODB_FILES} ${HPP}.hpp ${HPP}.cpp ${HPP}-odb.hxx ${HPP}-odb.cxx ${HPP}-odb.ixx)
+ENDFOREACH(HPP)
 
 QT4_WRAP_UI(UIS mainwindow.ui)
-QT4_Wrap_CPP(MOCS mainwindow.hpp)
+QT4_WRAP_CPP(MOCS mainwindow.hpp)
 
 ADD_EXECUTABLE(${PROJECT_NAME} 
   main.cpp 
   treeitem.hpp treeitem.cpp 
-  artist.hpp artist.cpp artist-odb.hxx artist-odb.cxx 
-  library.hpp library.cpp library-odb.hxx library-odb.cxx 
-  album.hpp album.cpp album-odb.hxx album-odb.cxx 
   rootitem.hpp rootitem.cpp 
   artistitem.hpp artistitem.cpp
   albumitem.hpp albumitem.cpp
+  cditem.hpp cditem.cpp
+  trackitem.hpp trackitem.cpp
   model.hpp model.cpp
   mainwindow.hpp mainwindow.cpp
+  ${ODB_FILES}
   ${UIS}
   ${MOCS}
-)
+  )
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${LIBS})

@@ -6,6 +6,7 @@
 #include<ostream>
 
 #include<odb/core.hxx>
+#include<odb/database.hxx>
 
 #include "artist.hpp"
 
@@ -22,7 +23,8 @@ public:
   Library(const Library& library);
   ~Library();
 
-  //friend std::ostream& operator<<(std::ostream& out, const Library& library);
+  bool Persist(odb::database& db) const;
+
 protected:
   friend class odb::access;
 #pragma db id auto

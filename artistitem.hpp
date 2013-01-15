@@ -8,7 +8,6 @@ class ArtistItem:public TreeItem, public Artist
 {
 public:
   ArtistItem(const Artist& artist);
-
 protected:
 private:
 };

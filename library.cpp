@@ -1,4 +1,7 @@
 #include "library.hpp"
+#include "library-odb.hxx"
+#include <exception>
+#include <iostream>
 
 Library::Library(std::string name)
 {
@@ -20,12 +23,21 @@ Library::~Library()
   Artists.clear();
 }
 
-/*std::ostream& operator<<(std::ostream& out, const Library& library)
+bool Library::Persist(odb::database& db) const
 {
-  if(library.Name!="")
-    out<<library.Name<<std::endl;
-  for(const Artist* artist:library.Artists)
-    out<<"\t"<<*artist<<std::endl;
+  for(const Artist* artist:Artists)
+    if(!artist->Persist(db))
+      return false;
 
-  return out;
-  }*/
+  try
+    {
+      db.persist(const_cast<Library&>(*this));
+    }
+  catch(const std::exception& e)
+    {
+      std::cerr<<e.what()<<std::endl;
+      return false;
+    }
+
+  return true;
+}

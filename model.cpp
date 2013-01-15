@@ -40,7 +40,7 @@ void Model::LoadDatabase(const QString& filename)
   for(Library library:r)
     Root=new RootItem(library);
 
-  //std::cout<<*Root<<std::endl;
+  std::cout<<*Root<<std::endl;
 }
 
 QModelIndex Model::index(int row, int column, const QModelIndex& parent) const
@@ -101,7 +101,7 @@ int Model::columnCount(const QModelIndex& parent) const
 
 QVariant Model::data(const QModelIndex& index, int role) const
 {
-  std::cout<<index.column()<<" "<<index.row()<<std::endl;
+  //std::cout<<index.column()<<" "<<index.row()<<std::endl;
   if (!index.isValid())
     return QVariant();
 

@@ -14,9 +14,8 @@ RootItem::RootItem(const Library& library):Library(library), TreeItem()
   Data.push_back(&Name);
   for(const Artist* artist:Artists)
     {
-      ArtistItem* artistItem=new ArtistItem(*artist);
-      artistItem->Parent=this;
-      Children.push_back(artistItem);
+      Children.push_back(new ArtistItem(*artist));
+      Children.back()->Parent=*this;
     }
 }
 

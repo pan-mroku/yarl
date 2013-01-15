@@ -8,6 +8,8 @@
 #include "artist-odb.hxx"
 #include "library.hpp"
 #include "library-odb.hxx"
+#include "cd.hpp"
+#include "cd-odb.hxx"
 
 #include <QtGui/QApplication>
 //#include "model.hpp"
@@ -37,22 +39,26 @@ void populate()
   Artist* b=new Artist("bsd");
   lib->Artists.push_back(a);
   lib->Artists.push_back(b);
-  Album* al=new Album(2005, "alb");
-  Album* alb=new Album(*al);
-  a->Albums.push_back(al);
+
+  Album* al=new CD(2005, "alcd");
+  CD* alb=new CD(2010, "alb");
   a->Albums.push_back(alb);
+  a->Albums.push_back(al);
+  alb->AddTrack("Track 1", 66);
+
   //std::cout<<lib<<std::endl;
     
   odb::core::transaction t (db.begin ());
-  //db.persist(root);
+  lib->Persist(db);
+  /*  db.persist(*alb);
   db.persist(*al);
-  db.persist(*alb);
+
   db.persist(*a);
   db.persist(*b);
-  db.persist(*lib);
-  delete lib;
+  db.persist(*lib);*/
 
   t.commit();
+  delete lib;
   std::cout<<"COMPLETE"<<std::endl;;
 }
 
@@ -66,7 +72,7 @@ void query_artists()
   odb::result<Artist> r (db.query<Artist>());
 
   //for(Artist a:r)
-    //std::cout<<a<<std::endl;
+  //std::cout<<a<<std::endl;
   std::cout<<"COMPLETE";
 }
 
