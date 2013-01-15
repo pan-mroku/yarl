@@ -1,11 +1,10 @@
 #ifndef CD_HPP
 #define CD_HPP
 
-#include <vector>
-#include <string>
+#include <QtCore/QString>
+#include <QtCore/QList>
 
 #include <odb/core.hxx>
-#include<odb/database.hxx>
 
 #include "album.hpp"
 #include "track.hpp"
@@ -14,16 +13,18 @@
 class CD:public Album
 {
 public:
-#pragma db value_not_null
-  std::vector<Track*> Tracks;
 
-  CD(const int year, const std::string& title);
+#pragma db transient
+  QList<TreeItem*>* Tracks;
+
+  CD(const int year, const QString& title);
   CD(const CD& other);
-  ~CD();
+  //~CD();
 
-  virtual void AddTrack(const std::string& title, const int duration, const int index=0);
-  virtual Album::Types Type() const;
-  virtual bool Persist(odb::database& db) const;
+  virtual void AddTrack(const QString& title, const int duration, const int index=0);
+  virtual Album::Types AlbumType() const;
+  virtual ItemTypes ItemType() const;
+  //virtual bool Persist(odb::database& db) const;
 
 protected:
   friend class odb::access;

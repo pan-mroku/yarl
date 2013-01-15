@@ -1,6 +1,6 @@
 #include "album.hpp"
 
-Album::Album(const int year, const std::string& title):Year(year), Title(title)
+Album::Album(const int year, const QString& title):Year(year), Title(title)
 {
 }
 
@@ -11,7 +11,7 @@ Album::Album(const Album& other)
   Title=other.Title;
 }
 
-Album::Types Album::Type() const
+Album::Types Album::AlbumType() const
 {
   return Album::Types::base;
 }

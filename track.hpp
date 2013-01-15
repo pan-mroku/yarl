@@ -1,28 +1,30 @@
 #ifndef TRACK_HPP
 #define TRACK_HPP
 
-#include <string>
+#include <QtCore/QString>
 
 #include <odb/core.hxx>
-#include<odb/database.hxx>
+
+#include "treeitem.hpp"
 
 #pragma db object
-class Track
+class Track:public TreeItem
 {
 public:
   int Number;
-  std::string Title;
+  QString Title;
   int DurationSeconds;
 
-  Track(const int number, const std::string& title, const int duration);
-  bool Persist(odb::database& db) const;
+  Track(const int number, const QString& title, const int duration);
+  virtual ItemTypes ItemType() const;
+  //  bool Persist(odb::database& db) const;
   
 protected:
   friend class odb::access;
   Track(){};
 
-#pragma db id auto
-  int id;
+  /*#pragma db id auto
+    int id;*/
 private:
 };
 

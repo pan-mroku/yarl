@@ -37,13 +37,13 @@ void populate()
   Library* lib=new Library("1");
   Artist* a=new Artist("asd");
   Artist* b=new Artist("bsd");
-  lib->Artists.push_back(a);
-  lib->Artists.push_back(b);
+  lib->Artists->push_back(a);
+  lib->Artists->push_back(b);
 
   Album* al=new CD(2005, "alcd");
   CD* alb=new CD(2010, "alb");
-  a->Albums.push_back(alb);
-  a->Albums.push_back(al);
+  a->Albums->push_back(alb);
+  a->Albums->push_back(al);
   alb->AddTrack("Track 1", 66);
 
   //std::cout<<lib<<std::endl;

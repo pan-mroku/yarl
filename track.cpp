@@ -3,12 +3,12 @@
 #include <exception>
 #include <iostream>
 
-Track::Track(const int number, const std::string& title, const int duration):Number(number), Title(title), DurationSeconds(duration)
+Track::Track(const int number, const QString& title, const int duration):Number(number), Title(title), DurationSeconds(duration)
 {
-
+  
 }
 
-bool Track::Persist(odb::database& db) const
+/*bool Track::Persist(odb::database& db) const
 {
   try
     {
@@ -21,3 +21,4 @@ bool Track::Persist(odb::database& db) const
     }
   return true;
 }
+*/

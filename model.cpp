@@ -38,7 +38,7 @@ void Model::LoadDatabase(const QString& filename)
   odb::result<Library> r (db.query<Library>());
 
   for(Library library:r)
-    Root=new RootItem(library);
+    Root=&library;
 
   std::cout<<*Root<<std::endl;
 }
@@ -51,7 +51,7 @@ QModelIndex Model::index(int row, int column, const QModelIndex& parent) const
   TreeItem* parentItem;
 
   if (!parent.isValid())
-    parentItem = const_cast<RootItem*>(Root);
+    parentItem = const_cast<TreeItem*>(Root);
   else
     parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
@@ -92,10 +92,11 @@ int Model::rowCount(const QModelIndex& parent) const
 
 int Model::columnCount(const QModelIndex& parent) const
 {
-  if (parent.isValid())
+  /*  if (parent.isValid())
     return static_cast<TreeItem*>(parent.internalPointer())->Data.size();
   else
-    return Root->Data.size();
+  return Root->Data.size();*/
+  return 1;
 
 }
 

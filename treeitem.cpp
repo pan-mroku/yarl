@@ -1,32 +1,28 @@
 #include "treeitem.hpp"
+#include "treeitem-odb.hxx"
+#include <typeinfo>
 
 #include<iostream>
 
 TreeItem::TreeItem(TreeItem* parent)
 {
   Parent=parent;
-  if(Parent!=NULL)
-    Parent->Children.push_back(const_cast<TreeItem*>(this));
 }
 
-TreeItem::TreeItem(const std::initializer_list<std::string>& data, TreeItem* parent)
-{
+/*TreeItem::TreeItem(const std::initializer_list<std::string>& data, TreeItem* parent)
+  {
   for(const std::string& data_element:data)
-    Data.push_back(new std::string(data_element));
+  Data.push_back(new std::string(data_element));
   Parent=parent;
   if(Parent!=NULL)
-    Parent->Children.push_back(const_cast<TreeItem*>(this));
-}
+  Parent->Children.push_back(const_cast<TreeItem*>(this));
+  }*/
 
 TreeItem::~TreeItem()
 {
   for(TreeItem* child:Children)
     delete child;
   Children.clear();
-
-  /*  for(std::string* data_element:Data)
-      delete data_element;*/
-  Data.clear();
 }
 
 int TreeItem::Row() const
@@ -41,17 +37,35 @@ int TreeItem::Row() const
 
 QString TreeItem::QData() const
 {
-  QString out;
-  for(const std::string* element:Data)
-    out+=QString::fromStdString(*element)+" ";
-  return out;
+  return "PLACEHOLDER! From TreeItem class.";
+}
+
+bool TreeItem::Persist(odb::database& db) const
+{
+  for(const TreeItem* item:Children)
+    if(!item->Persist(db))
+      return false;
+
+  try
+    {
+      db.persist(const_cast<TreeItem&>(*this));
+    }
+  catch(const std::exception& e)
+    {
+      std::cerr<<e.what()<<std::endl;
+      return false;
+    }
+
+  return true;
+}
+
+TreeItem::ItemTypes TreeItem::ItemType() const
+{
+  return ItemTypes::BASE;
 }
 
 std::ostream& operator<<(std::ostream& out, const TreeItem& item)
 {
-  for (const std::string* data:item.Data)
-    out<<*data<<" ";
-
   if(item.Children.size()>0)
     {
       out<<std::endl<<"--->"<<std::endl;
@@ -62,3 +76,4 @@ std::ostream& operator<<(std::ostream& out, const TreeItem& item)
 
   return out;
 }
+

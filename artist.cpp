@@ -4,21 +4,33 @@
 #include <exception>
 #include <iostream>
 
-Artist::Artist(const std::string& name)
+Artist::Artist(const QString& name)
 {
   Name=name;
+  Albums=&Children;
 }
 
 Artist::Artist(const Artist& other)
 {
   id=other.id;
   Name=other.Name;
-  for(const Album* album:other.Albums)
-    if(album->Type()==Album::Types::cd)
-      Albums.push_back(new CD(dynamic_cast<const CD&>(*album)));
+  Albums=&Children;
+  for(const TreeItem* item:other.Children)
+    {
+      if(item->ItemType()==ItemTypes::album)
+        {
+          const Album* album=dynamic_cast<const Album*>(item);
+          
+          if(album->AlbumType()==Album::Types::cd)
+            Children.push_back(new CD(dynamic_cast<const CD&>(*album)));
+          
+          
+          Children.back()->Parent=this;
+        }
+    }
 }
 
-Artist::~Artist()
+/*Artist::~Artist()
 {
   for(Album* album:Albums)
     delete album;
@@ -43,3 +55,4 @@ bool Artist::Persist(odb::database& db) const
 
   return true;
 }
+*/

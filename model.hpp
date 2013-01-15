@@ -19,12 +19,12 @@
 //#include "album.hpp"
 //#include "album-odb.hxx"
 
-#include "rootitem.hpp"
+//#include "rootitem.hpp"
 
 class Model:public QAbstractItemModel
 {
 public:
-  RootItem* Root;
+  TreeItem* Root;
 
   //QList<Artist*> Artists;
   //QList<QSharedPointer<Album>> Albums

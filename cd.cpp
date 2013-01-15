@@ -3,34 +3,42 @@
 #include <exception>
 #include <iostream>
 
-CD::CD(const int year, const std::string& title):Album(year,title)
+CD::CD(const int year, const QString& title):Album(year,title)
 {
+  Tracks=&Children;
 }
 
 CD::CD(const CD& other):Album(other)
 {
-  for(const Track* track:other.Tracks)
-    Tracks.push_back(new Track(*track));
+  for(const TreeItem* item:other.Children)
+    {
+      if(item->ItemType()==ItemTypes::track)
+        {
+          Children.push_back(new Track(dynamic_cast<const Track&>(*item)));
+          Children.back()->Parent=this;
+        }
+    }
+      Tracks=&Children;
 }
 
-CD::~CD()
+/*CD::~CD()
 {
   for(Track* track:Tracks)
     delete track;
   Tracks.clear();
-}
+  }*/
 
-void CD::AddTrack(const std::string& title, const int duration, const int index)
+void CD::AddTrack(const QString& title, const int duration, const int index)
 {
-  Tracks.push_back(new Track(Tracks.size()+1, title, duration));
+  Children.push_back(new Track(Children.size()+1, title, duration));
 }
 
-Album::Types CD::Type() const
+Album::Types CD::AlbumType() const
 {
   return Album::Types::cd;
 }
 
-bool CD::Persist(odb::database& db) const
+/*bool CD::Persist(odb::database& db) const
 {
   for(const Track* track:Tracks)
     if(!track->Persist(db))
@@ -49,3 +57,4 @@ bool CD::Persist(odb::database& db) const
 
   return true;
 }
+*/

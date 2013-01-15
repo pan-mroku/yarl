@@ -6,24 +6,32 @@
 Library::Library(std::string name)
 {
   Name=name;
+  Artists=&Children;
 }
 
 Library::Library(const Library& library)
 {
+  Artists=&Children;
   id=library.id;
   Name=library.Name;
-  for(const Artist* artist:library.Artists)
-    Artists.push_back(new Artist(*artist));
+  for(const TreeItem* item:library.Children)
+    {
+      if(item->ItemType()==ItemTypes::artist)
+        {
+          Children.push_back(new Artist(dynamic_cast<const Artist&>(*item)));
+          Children.back()->Parent=this;
+        }
+    }
 }
 
-Library::~Library()
+/*Library::~Library()
 {
   for(Artist* artist:Artists)
     delete artist;
   Artists.clear();
-}
+  }*/
 
-bool Library::Persist(odb::database& db) const
+/*bool Library::Persist(odb::database& db) const
 {
   for(const Artist* artist:Artists)
     if(!artist->Persist(db))
@@ -41,3 +49,4 @@ bool Library::Persist(odb::database& db) const
 
   return true;
 }
+*/

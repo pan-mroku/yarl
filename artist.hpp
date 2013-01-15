@@ -1,34 +1,34 @@
 #ifndef ARTIST_HPP
 #define ARTIST_HPP
 
-#include <ostream>
-#include <string>
-#include <vector>
+#include <QtCore/QList>
+#include <QtCore/QString>
 
 #include <odb/core.hxx>
-#include<odb/database.hxx>
 
 #include "album.hpp"
+#include "treeitem.hpp"
 
 #pragma db object
-class Artist
+class Artist:public TreeItem
 {
 public:
 #pragma db unique
-  std::string Name;
+  QString Name;
 
-#pragma db value_not_null
-  std::vector<Album*> Albums;
+#pragma db transient
+  QList<TreeItem*>* Albums;
 
-  Artist(const std::string& name);
+  Artist(const QString& name);
   Artist(const Artist& other);
-  ~Artist();
+  virtual ItemTypes ItemType() const;
+  /*~Artist();
 
-  bool Persist(odb::database& db) const;
+    bool Persist(odb::database& db) const;*/
 
 protected:
-#pragma db id auto
-    int id;
+  /*#pragma db id auto
+    int id;*/
 
   friend class odb::access; //ODB
   Artist(){};
