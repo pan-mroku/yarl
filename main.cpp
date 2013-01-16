@@ -11,22 +11,17 @@
 #include <QtGui/QApplication>
 #include "mainwindow.hpp"
 
-void create()
+void create(Model& m)
 {
-  std::cout<<"Creation... ";
-  odb::sqlite::database db("test.db", SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
-
-  odb::transaction t (db.begin ());
-  odb::schema_catalog::create_schema (db);
-  t.commit ();
-  std::cout<<"COMPLETE"<<std::endl;;
+  m.NewDatabase();
 }
 
-void populate()
+void populate(Model& model)
 {
   std::cout<<"Populating... ";
-  odb::sqlite::database db("test.db", SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
   
+  odb::sqlite::database db(model.DatabaseFilename.toStdString(), SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+
   Library* lib=new Library("1");
   Artist* a=new Artist("asd");
   Artist* b=new Artist("bsd");
@@ -39,11 +34,14 @@ void populate()
   a->Albums->push_back(al);
   alb->AddTrack("Track 1", 66);
 
+  //model.Root=lib->Copy();
   //std::cout<<*lib<<std::endl;
     
   odb::core::transaction t (db.begin ());
+  odb::schema_catalog::create_schema (db);
   lib->Persist(db);
   t.commit();
+
   delete lib;
 
   std::cout<<"COMPLETE"<<std::endl;;
@@ -51,11 +49,11 @@ void populate()
 
 int main(int argc, char *argv[])
 {
-
-  create();
-  populate();
   QApplication a(argc, argv);
   MainWindow w;
+  //create(*w.model);
+  //populate(*w.model);
+
   w.showMaximized();
   return a.exec();
 }

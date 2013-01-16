@@ -4,13 +4,7 @@
 
 Model::Model(const QString& filename):DatabaseFilename(filename)
 {
-  // odb::sqlite::database db(DatabaseFilename.toStdString(), SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
-  //root=QSharedPointer<TreeItem>(new TreeItem());
-  Root=NULL;
-  LoadDatabase();
-  //odb::result<Artist> r (db.query<Artist>(odb::query<Artist>::Name=="asd"));
-
-  //for(Artist a:r)
+  Root=new Library();
 }
 
 Model::~Model()
@@ -18,16 +12,21 @@ Model::~Model()
   delete Root;
 }
 
-void Model::NewDatabase(QString filename)
+void Model::NewDatabase(const QString& filename)
 {
-
-
+  if(filename!="")
+    DatabaseFilename=QString(filename);
+  odb::sqlite::database db(DatabaseFilename.toStdString(), SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+  odb::core::transaction t (db.begin ());
+  odb::schema_catalog::create_schema (db);
+  Root->Persist(db);
+  t.commit();
 }
 
 void Model::LoadDatabase(const QString& filename)
 {
   if(filename!="")
-    DatabaseFilename=filename;
+    DatabaseFilename=QString(filename);
 
   odb::sqlite::database db(DatabaseFilename.toStdString(), SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
   odb::core::transaction t (db.begin ());
@@ -37,8 +36,8 @@ void Model::LoadDatabase(const QString& filename)
 
   odb::result<Library> r (db.query<Library>());
 
-  for(Library library:r)
-    Root=library.Copy();
+ //ograniczam się do jednej bazy
+  Root=r.begin()->Copy();
 
   //std::cout<<*Root<<std::endl;
 }

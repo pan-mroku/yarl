@@ -18,9 +18,13 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
   Model* model;
-    
+public slots:
+  void Reload();
+  void Save();
+
 private slots:
   void on_centralWidget_customContextMenuRequested(const QPoint &pos);
+ 
 
 private:
   Ui::MainWindow *ui;

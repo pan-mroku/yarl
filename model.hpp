@@ -27,17 +27,10 @@ class Model:public QAbstractItemModel
 public:
   TreeItem* Root;
 
-  //QList<Artist*> Artists;
-  //QList<QSharedPointer<Album>> Albums
   QString DatabaseFilename;
-  //std::list<QSharedPointer<Artist>> Artists; //utwór
 
-  Model(const QString& filename="test.db");
+  Model(const QString& filename="yarl.db");
   ~Model();
-
-  void NewDatabase(QString filename="");
-  void LoadDatabase(const QString& filename="");
-
 
   QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
   QModelIndex parent ( const QModelIndex & index ) const;
@@ -47,6 +40,10 @@ public:
 
 
   friend std::ostream& operator<<(std::ostream& out, const Model& model);
+
+  void NewDatabase(const QString& filename="");
+  void LoadDatabase(const QString& filename="");
+
 protected:
 private:
 };
