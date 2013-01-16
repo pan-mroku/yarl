@@ -9,7 +9,7 @@
 #include "album.hpp"
 #include "treeitem.hpp"
 
-#pragma db object
+#pragma db object pointer(*)
 class Artist:public TreeItem
 {
 public:
@@ -21,6 +21,8 @@ public:
 
   Artist(const QString& name);
   Artist(const Artist& other);
+  virtual TreeItem* Copy() const;
+  virtual QString QData() const;
   virtual ItemTypes ItemType() const;
   /*~Artist();
 

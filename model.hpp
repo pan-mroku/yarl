@@ -14,6 +14,7 @@
 #include "library.hpp"
 #include "library-odb.hxx"
 #include "treeitem.hpp"
+#include "treeitem-odb.hxx"
 //#include "artist.hpp"
 //#include "artist-odb.hxx"
 //#include "album.hpp"

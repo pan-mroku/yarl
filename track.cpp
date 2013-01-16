@@ -8,6 +8,21 @@ Track::Track(const int number, const QString& title, const int duration):Number(
   
 }
 
+TreeItem::ItemTypes Track::ItemType() const
+{
+  return ItemTypes::track;
+}
+
+TreeItem* Track::Copy() const
+{
+  return new Track(*this);
+}
+
+QString Track::QData() const
+{
+  return QString::number(Number)+" "+Title+" "+QString::number(DurationSeconds/60.0);
+}
+
 /*bool Track::Persist(odb::database& db) const
 {
   try

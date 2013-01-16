@@ -21,6 +21,11 @@ CD::CD(const CD& other):Album(other)
       Tracks=&Children;
 }
 
+TreeItem* CD::Copy() const
+{
+  return new CD(*this);
+}
+
 /*CD::~CD()
 {
   for(Track* track:Tracks)

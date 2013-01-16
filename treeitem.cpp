@@ -18,6 +18,24 @@ TreeItem::TreeItem(TreeItem* parent)
   Parent->Children.push_back(const_cast<TreeItem*>(this));
   }*/
 
+TreeItem::TreeItem(const TreeItem& other)
+{
+  for(TreeItem* child:Children)
+    delete child;
+  Children.clear();
+
+  for(const TreeItem* otherChild:other.Children)
+    {
+      /*      TreeItem* newItem;
+      switch(typeid(*otherChild))
+        {
+        case typeid(
+        }*/
+      Children.push_back(otherChild->Copy());
+      Children.back()->Parent=this;
+    }
+}
+
 TreeItem::~TreeItem()
 {
   for(TreeItem* child:Children)
@@ -64,8 +82,24 @@ TreeItem::ItemTypes TreeItem::ItemType() const
   return ItemTypes::BASE;
 }
 
+TreeItem& TreeItem::operator=(const TreeItem& other)
+{
+  for(TreeItem* child:Children)
+    delete child;
+  Children.clear();
+
+  for(const TreeItem* otherChild:other.Children)
+    {
+      Children.push_back(otherChild->Copy());
+      Children.back()->Parent=this;
+    }
+  return *this;
+}
+
 std::ostream& operator<<(std::ostream& out, const TreeItem& item)
 {
+  out<<item.QData().toStdString()<<std::endl;
+
   if(item.Children.size()>0)
     {
       out<<std::endl<<"--->"<<std::endl;

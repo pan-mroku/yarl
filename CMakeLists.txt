@@ -24,12 +24,6 @@ QT4_WRAP_CPP(MOCS mainwindow.hpp)
 
 ADD_EXECUTABLE(${PROJECT_NAME} 
   main.cpp 
-  #treeitem.hpp treeitem.cpp 
-  #rootitem.hpp rootitem.cpp 
-  #artistitem.hpp artistitem.cpp
-  #albumitem.hpp albumitem.cpp
-  #cditem.hpp cditem.cpp
-  #trackitem.hpp trackitem.cpp
   model.hpp model.cpp
   mainwindow.hpp mainwindow.cpp
   ${ODB_FILES}

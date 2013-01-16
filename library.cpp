@@ -24,6 +24,21 @@ Library::Library(const Library& library)
     }
 }
 
+TreeItem* Library::Copy() const
+{
+  return new Library(*this);
+}
+
+QString Library::QData() const
+{
+  return "";
+}
+
+TreeItem::ItemTypes Library::ItemType() const
+{
+  return ItemTypes::library;
+}
+
 /*Library::~Library()
 {
   for(Artist* artist:Artists)

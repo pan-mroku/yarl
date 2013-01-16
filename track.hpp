@@ -7,7 +7,7 @@
 
 #include "treeitem.hpp"
 
-#pragma db object
+#pragma db object pointer(*)
 class Track:public TreeItem
 {
 public:
@@ -17,6 +17,8 @@ public:
 
   Track(const int number, const QString& title, const int duration);
   virtual ItemTypes ItemType() const;
+  virtual QString QData() const;
+  virtual TreeItem* Copy() const;
   //  bool Persist(odb::database& db) const;
   
 protected:

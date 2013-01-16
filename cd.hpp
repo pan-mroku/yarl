@@ -9,7 +9,7 @@
 #include "album.hpp"
 #include "track.hpp"
 
-#pragma db object
+#pragma db object pointer(*)
 class CD:public Album
 {
 public:
@@ -23,7 +23,7 @@ public:
 
   virtual void AddTrack(const QString& title, const int duration, const int index=0);
   virtual Album::Types AlbumType() const;
-  virtual ItemTypes ItemType() const;
+  virtual TreeItem* Copy() const;
   //virtual bool Persist(odb::database& db) const;
 
 protected:

@@ -38,7 +38,7 @@ void Model::LoadDatabase(const QString& filename)
   odb::result<Library> r (db.query<Library>());
 
   for(Library library:r)
-    Root=&library;
+    Root=library.Copy();
 
   std::cout<<*Root<<std::endl;
 }

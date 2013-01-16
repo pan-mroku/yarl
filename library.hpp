@@ -9,7 +9,7 @@
 #include "treeitem.hpp"
 #include "artist.hpp"
 
-#pragma db object
+#pragma db object pointer(*)
 class Library:public TreeItem
 {
 public:
@@ -20,7 +20,9 @@ public:
 
   Library(std::string name="");
   Library(const Library& library);
+  virtual TreeItem* Copy() const;
 
+  virtual QString QData() const;
   virtual ItemTypes ItemType() const;
   //  ~Library();
 

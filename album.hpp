@@ -8,7 +8,7 @@
 
 #include "treeitem.hpp"
 
-#pragma db object polymorphic
+#pragma db object polymorphic pointer(*)
 class Album:public TreeItem
 {
 public:
@@ -30,6 +30,7 @@ public:
   virtual void AddTrack(const QString& title, const int duration, const int index=0)=0;
   virtual Types AlbumType() const;
   virtual ItemTypes ItemType() const;
+  virtual QString QData() const;
   //  virtual bool Persist(odb::database& db) const=0;
 
 protected:

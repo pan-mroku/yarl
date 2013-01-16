@@ -46,7 +46,7 @@ void populate()
   a->Albums->push_back(al);
   alb->AddTrack("Track 1", 66);
 
-  //std::cout<<lib<<std::endl;
+  std::cout<<*lib<<std::endl;
     
   odb::core::transaction t (db.begin ());
   lib->Persist(db);

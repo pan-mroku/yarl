@@ -30,6 +30,21 @@ Artist::Artist(const Artist& other)
     }
 }
 
+TreeItem* Artist::Copy() const
+{
+  return new Artist(*this);
+}
+
+QString Artist::QData() const
+{
+  return Name;
+}
+
+TreeItem::ItemTypes Artist::ItemType() const
+{
+  return ItemTypes::artist;
+}
+
 /*Artist::~Artist()
 {
   for(Album* album:Albums)
