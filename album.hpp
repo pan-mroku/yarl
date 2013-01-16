@@ -25,20 +25,15 @@ public:
 
   Album(const int year, const QString& title);
   Album(const Album& other);
-  virtual ~Album();
 
   virtual void AddTrack(const QString& title, const int duration, const int index=0)=0;
   virtual Types AlbumType() const;
   virtual ItemTypes ItemType() const;
   virtual QString QData() const;
-  //  virtual bool Persist(odb::database& db) const=0;
 
 protected:
-
   friend class odb::access;
   Album(){};
-  /*#pragma db id auto
-    int id;*/
 
 private:
   

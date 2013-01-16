@@ -24,14 +24,8 @@ public:
   virtual TreeItem* Copy() const;
   virtual QString QData() const;
   virtual ItemTypes ItemType() const;
-  /*~Artist();
-
-    bool Persist(odb::database& db) const;*/
 
 protected:
-  /*#pragma db id auto
-    int id;*/
-
   friend class odb::access; //ODB
   Artist(){};
 

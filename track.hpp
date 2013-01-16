@@ -19,14 +19,11 @@ public:
   virtual ItemTypes ItemType() const;
   virtual QString QData() const;
   virtual TreeItem* Copy() const;
-  //  bool Persist(odb::database& db) const;
   
 protected:
   friend class odb::access;
   Track(){};
 
-  /*#pragma db id auto
-    int id;*/
 private:
 };
 

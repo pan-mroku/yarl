@@ -24,14 +24,9 @@ public:
 
   virtual QString QData() const;
   virtual ItemTypes ItemType() const;
-  //  ~Library();
-
-  //bool Persist(odb::database& db) const;
 
 protected:
   friend class odb::access;
-  /*#pragma db id auto
-    int id;*/
 
 private:
 };

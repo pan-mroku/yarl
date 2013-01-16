@@ -40,7 +40,7 @@ void Model::LoadDatabase(const QString& filename)
   for(Library library:r)
     Root=library.Copy();
 
-  std::cout<<*Root<<std::endl;
+  //std::cout<<*Root<<std::endl;
 }
 
 QModelIndex Model::index(int row, int column, const QModelIndex& parent) const

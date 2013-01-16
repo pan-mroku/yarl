@@ -1,6 +1,5 @@
 #include "treeitem.hpp"
 #include "treeitem-odb.hxx"
-#include <typeinfo>
 
 #include<iostream>
 
@@ -8,15 +7,6 @@ TreeItem::TreeItem(TreeItem* parent)
 {
   Parent=parent;
 }
-
-/*TreeItem::TreeItem(const std::initializer_list<std::string>& data, TreeItem* parent)
-  {
-  for(const std::string& data_element:data)
-  Data.push_back(new std::string(data_element));
-  Parent=parent;
-  if(Parent!=NULL)
-  Parent->Children.push_back(const_cast<TreeItem*>(this));
-  }*/
 
 TreeItem::TreeItem(const TreeItem& other)
 {
@@ -26,11 +16,6 @@ TreeItem::TreeItem(const TreeItem& other)
 
   for(const TreeItem* otherChild:other.Children)
     {
-      /*      TreeItem* newItem;
-      switch(typeid(*otherChild))
-        {
-        case typeid(
-        }*/
       Children.push_back(otherChild->Copy());
       Children.back()->Parent=this;
     }

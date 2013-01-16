@@ -25,7 +25,6 @@ public:
   TreeItem(TreeItem* parent=NULL);
   TreeItem(const TreeItem& other);
   virtual TreeItem* Copy() const=0;
-  //TreeItem(const std::initializer_list<std::string>& data, TreeItem* parent=NULL);
   virtual ~TreeItem();
 
   int Row() const;

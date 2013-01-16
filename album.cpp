@@ -32,7 +32,3 @@ QString Album::QData() const
     }
   return QString::number(Year)+" "+Title;
 }
-
-Album::~Album()
-{
-}
