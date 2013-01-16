@@ -21,6 +21,8 @@ public:
 public slots:
   void Reload();
   void Save();
+  bool Add();
+  void Delete();
 
 private slots:
   void on_centralWidget_customContextMenuRequested(const QPoint &pos);
