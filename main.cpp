@@ -51,8 +51,8 @@ int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
   MainWindow w;
-  //create(*w.model);
-  //populate(*w.model);
+  create(*w.model);
+  populate(*w.model);
 
   w.showMaximized();
   return a.exec();

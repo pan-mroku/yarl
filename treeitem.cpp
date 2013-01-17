@@ -10,6 +10,8 @@ TreeItem::TreeItem(TreeItem* parent)
 
 TreeItem::TreeItem(const TreeItem& other)
 {
+  id=other.id;
+  Parent=NULL;
   for(TreeItem* child:Children)
     delete child;
   Children.clear();
@@ -43,9 +45,9 @@ QString TreeItem::QData() const
   return "PLACEHOLDER! From TreeItem class.";
 }
 
-bool TreeItem::Persist(odb::database& db) const
+bool TreeItem::Persist(odb::database& db)
 {
-  for(const TreeItem* item:Children)
+  for(TreeItem* item:Children)
     if(!item->Persist(db))
       return false;
 
@@ -60,6 +62,22 @@ bool TreeItem::Persist(odb::database& db) const
     }
 
   return true;
+}
+
+void TreeItem::Erase(odb::database& db)
+{
+  for(TreeItem* item:Children)
+    item->Erase(db);
+
+  db.erase(const_cast<TreeItem&>(*this));
+}
+
+void TreeItem::Update(odb::database& db)
+{
+  for(TreeItem* item:Children)
+    item->Update(db);
+
+  db.update(const_cast<TreeItem&>(*this));
 }
 
 TreeItem::ItemTypes TreeItem::ItemType() const

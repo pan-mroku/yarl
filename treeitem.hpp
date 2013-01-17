@@ -8,7 +8,7 @@
 #include <odb/core.hxx>
 #include <odb/database.hxx>
 
-#pragma db object polymorphic pointer(*)
+#pragma db object no_id polymorphic pointer(*)
 class TreeItem
 {
 public:
@@ -30,7 +30,10 @@ public:
   int Row() const;
 
   virtual QString QData() const;
-  virtual bool Persist(odb::database& db) const;
+  virtual bool Persist(odb::database& db);
+  virtual void Erase(odb::database& db);
+  virtual void Update(odb::database& db);
+
   virtual ItemTypes ItemType() const;
 
   TreeItem& operator=(const TreeItem& other);

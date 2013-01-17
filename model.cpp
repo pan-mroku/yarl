@@ -39,6 +39,7 @@ void Model::LoadDatabase(const QString& filename)
  //ograniczam się do jednej bazy
   Root=r.begin()->Copy();
 
+  t.commit();
   //std::cout<<*Root<<std::endl;
 }
 
@@ -69,7 +70,7 @@ QModelIndex Model::parent(const QModelIndex& index) const
   TreeItem* childItem = static_cast<TreeItem*>(index.internalPointer());
   TreeItem* parentItem = childItem->Parent;
 
-  if (parentItem == NULL|| parentItem==Root)
+  if (parentItem == NULL)
     return QModelIndex();
 
   return createIndex(parentItem->Row(), 0, parentItem);
@@ -91,17 +92,12 @@ int Model::rowCount(const QModelIndex& parent) const
 
 int Model::columnCount(const QModelIndex& parent) const
 {
-  /*  if (parent.isValid())
-    return static_cast<TreeItem*>(parent.internalPointer())->Data.size();
-  else
-  return Root->Data.size();*/
+  //ilość kolumn w widkou
   return 1;
-
 }
 
 QVariant Model::data(const QModelIndex& index, int role) const
 {
-  //std::cout<<index.column()<<" "<<index.row()<<std::endl;
   if (!index.isValid())
     return QVariant();
 
@@ -111,6 +107,26 @@ QVariant Model::data(const QModelIndex& index, int role) const
   TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
   return item->QData();
+}
+
+void Model::Erase(const QModelIndex& index)
+{
+  if(!index.isValid())
+    return;
+
+  odb::sqlite::database db(DatabaseFilename.toStdString(), SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+  odb::core::transaction t (db.begin ());
+
+  TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+  TreeItem* parent=item->Parent;
+
+  item->Erase(db);
+
+  parent->Children.removeOne(item);
+
+  db.update(*parent);
+  t.commit();
+  delete item;
 }
 
 std::ostream& operator<<(std::ostream& out, const Model& model)

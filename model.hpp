@@ -37,6 +37,7 @@ public:
   int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
   int columnCount ( const QModelIndex & parent = QModelIndex() ) const;
   QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+  void Erase(const QModelIndex& index);
 
 
   friend std::ostream& operator<<(std::ostream& out, const Model& model);

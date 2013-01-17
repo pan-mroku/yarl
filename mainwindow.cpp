@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
   connect(ui->LoadButton, SIGNAL(clicked()), this, SLOT(Reload()));
   connect(ui->DeleteButton, SIGNAL(clicked()), this, SLOT(Delete()));
+  
+  //gdyby mnie pokusiło na modyfikowanie drzewa myszką
+  ui->treeView->setSelectionBehavior(QTreeView::SelectItems);
 }
 
 MainWindow::~MainWindow()
@@ -42,14 +45,13 @@ bool MainWindow::Add()
 
 void MainWindow::Delete()
 {
-  QMessageBox debug;
   QModelIndexList indexList=ui->treeView->selectionModel()->selectedIndexes();
-  QString out="";
-  for(const QModelIndex& index:indexList)
-    out+=model->data(index).toString()+'\n';
-  debug.setText(out);
-  debug.exec();
-
+  if(indexList.size()==0)
+    return;
+  model->Erase(indexList[0]);
+  
+  ui->treeView->setModel(NULL);
+  ui->treeView->setModel(model);
 }
 
 void MainWindow::on_centralWidget_customContextMenuRequested(const QPoint &pos)
