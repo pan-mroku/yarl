@@ -19,13 +19,14 @@ FOREACH(HPP ${ODB_CLASSES})
 SET(ODB_FILES ${ODB_FILES} ${HPP}.hpp ${HPP}.cpp ${HPP}-odb.hxx ${HPP}-odb.cxx ${HPP}-odb.ixx)
 ENDFOREACH(HPP)
 
-QT4_WRAP_UI(UIS mainwindow.ui)
-QT4_WRAP_CPP(MOCS mainwindow.hpp)
+QT4_WRAP_UI(UIS mainwindow.ui dialog.ui)
+QT4_WRAP_CPP(MOCS mainwindow.hpp dialog.hpp)
 
 ADD_EXECUTABLE(${PROJECT_NAME} 
   main.cpp 
   model.hpp model.cpp
   mainwindow.hpp mainwindow.cpp
+  dialog.hpp dialog.cpp
   ${ODB_FILES}
   ${UIS}
   ${MOCS}

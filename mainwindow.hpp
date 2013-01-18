@@ -2,9 +2,9 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
-#include <QStandardItemModel>
 #include "model.hpp"
 #include "treeitem.hpp"
+#include "dialog.hpp"
 
 namespace Ui {
   class MainWindow;

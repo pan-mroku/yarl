@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
   connect(ui->LoadButton, SIGNAL(clicked()), this, SLOT(Reload()));
   connect(ui->DeleteButton, SIGNAL(clicked()), this, SLOT(Delete()));
+  connect(ui->NewButton, SIGNAL(clicked()), this, SLOT(Add()));
   
   //gdyby mnie pokusiło na modyfikowanie drzewa myszką
   ui->treeView->setSelectionBehavior(QTreeView::SelectItems);
@@ -40,7 +41,8 @@ void MainWindow::Save()
 
 bool MainWindow::Add()
 {
-  return false;
+  Dialog dialog(this);
+  return dialog.exec();
 }
 
 void MainWindow::Delete()
@@ -50,6 +52,8 @@ void MainWindow::Delete()
     return;
   model->Erase(indexList[0]);
   
+  //powinien być slot i sygnał, ale mało już mam czasu.
+  //Trzeba odwierzyć przed końcem metody. inaczj treeview próbuje się dostać do nieisteniejącego elementu
   ui->treeView->setModel(NULL);
   ui->treeView->setModel(model);
 }

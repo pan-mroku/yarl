@@ -1,4 +1,5 @@
 #include "track.hpp"
+#include <QTime>
 
 Track::Track(const int number, const QString& title, const int duration):Number(number), Title(title), DurationSeconds(duration)
 {
@@ -17,5 +18,6 @@ TreeItem* Track::Copy() const
 
 QString Track::QData() const
 {
-  return QString::number(Number)+" "+Title+" "+QString::number(DurationSeconds/60.0);
+  QTime zeroTime(0,0);
+  return QString::number(Number)+" "+Title+" "+zeroTime.addSecs(DurationSeconds).toString("mm:ss");
 }

@@ -32,7 +32,7 @@ void populate(Model& model)
   CD* alb=new CD(2010, "alb");
   a->Albums->push_back(alb);
   a->Albums->push_back(al);
-  alb->AddTrack("Track 1", 66);
+  alb->AddTrack("Track 1", 76);
 
   //model.Root=lib->Copy();
   //std::cout<<*lib<<std::endl;
