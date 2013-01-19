@@ -2,15 +2,11 @@ yarl
 ====
 
 yarl - Yet Another Record Library
+[github repo](https://github.com/pan-mroku/yarl)
 
 Projekt na przedmioty "Obiekty i Bazy Danych" oraz "Architektura Oprogramowania".
 
 [Opis działania ODB.](http://www.codesynthesis.com/products/odb/)
-
-Plan
-----
-
-* Dodać obsługę okienek
 
 Zależności
 ----------
