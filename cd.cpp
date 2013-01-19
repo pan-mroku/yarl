@@ -7,12 +7,7 @@ CD::CD(const int year, const QString& title):Album(year,title)
 
 CD::CD(const CD& other):Album(other)
 {
-  for(const TreeItem* item:other.Children)
-    {
-      Children.push_back(item->Copy());
-      Children.back()->Parent=this;
-    }
-      Tracks=&Children;
+  Tracks=&Children;
 }
 
 TreeItem* CD::Copy() const
@@ -23,6 +18,7 @@ TreeItem* CD::Copy() const
 void CD::AddTrack(const QString& title, const int duration, const int index)
 {
   Children.push_back(new Track(Children.size()+1, title, duration));
+  Children.back()->Parent=this;
 }
 
 Album::Types CD::AlbumType() const

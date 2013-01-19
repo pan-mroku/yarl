@@ -1,10 +1,10 @@
 #include "album.hpp"
 
-Album::Album(const int year, const QString& title):Year(year), Title(title)
+Album::Album(const int year, const QString& title):Year(year), Title(title), TreeItem()
 {
 }
 
-Album::Album(const Album& other)
+Album::Album(const Album& other):TreeItem(other)
 {
   id=other.id;
   Year=other.Year;

@@ -1,7 +1,7 @@
 #include "track.hpp"
 #include <QTime>
 
-Track::Track(const int number, const QString& title, const int duration):Number(number), Title(title), DurationSeconds(duration)
+Track::Track(const int number, const QString& title, const int duration):Number(number), Title(title), DurationSeconds(duration), TreeItem()
 {
   
 }

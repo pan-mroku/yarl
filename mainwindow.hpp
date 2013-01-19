@@ -20,7 +20,6 @@ public:
   Model* model;
 public slots:
   void Reload();
-  void Save();
   bool Add();
   void Delete();
 

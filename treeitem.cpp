@@ -75,7 +75,16 @@ void TreeItem::Erase(odb::database& db)
 void TreeItem::Update(odb::database& db)
 {
   for(TreeItem* item:Children)
-    item->Update(db);
+    {
+      try
+        {
+          item->Update(db);
+        }
+      catch(odb::object_not_persistent e)
+        {
+          item->Persist(db);
+        }
+    }
 
   db.update(const_cast<TreeItem&>(*this));
 }

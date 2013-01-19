@@ -1,22 +1,17 @@
 #include "artist.hpp"
 #include "cd.hpp"
 
-Artist::Artist(const QString& name)
+Artist::Artist(const QString& name):TreeItem()
 {
   Name=name;
   Albums=&Children;
 }
 
-Artist::Artist(const Artist& other)
+Artist::Artist(const Artist& other):TreeItem(other)
 {
   id=other.id;
   Name=other.Name;
   Albums=&Children;
-  for(const TreeItem* item:other.Children)
-    {
-      Children.push_back(item->Copy());
-      Children.back()->Parent=this;
-    }
 }
 
 TreeItem* Artist::Copy() const

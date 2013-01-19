@@ -34,15 +34,14 @@ void MainWindow::Reload()
   ui->treeView->setModel(model);
 }
 
-void MainWindow::Save()
-{
-  //model->
-}
-
 bool MainWindow::Add()
 {
   Dialog dialog(this);
-  return dialog.exec();
+  if(dialog.exec())
+      model->AddArtist(dialog.NewArtist);
+  ui->treeView->setModel(NULL);
+  ui->treeView->setModel(model);
+
 }
 
 void MainWindow::Delete()

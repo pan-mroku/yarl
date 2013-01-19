@@ -25,6 +25,8 @@ public:
   virtual QString QData() const;
   virtual ItemTypes ItemType() const;
 
+  TreeItem* AddArtist(Artist* artist);
+
 protected:
   friend class odb::access;
 

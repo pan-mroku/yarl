@@ -34,9 +34,6 @@ void populate(Model& model)
   a->Albums->push_back(al);
   alb->AddTrack("Track 1", 76);
 
-  //model.Root=lib->Copy();
-  //std::cout<<*lib<<std::endl;
-    
   odb::core::transaction t (db.begin ());
   odb::schema_catalog::create_schema (db);
   lib->Persist(db);
@@ -51,8 +48,8 @@ int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
   MainWindow w;
-  create(*w.model);
-  populate(*w.model);
+  //create(*w.model);
+  //populate(*w.model);
 
   w.showMaximized();
   return a.exec();

@@ -20,6 +20,7 @@ public:
   QList<TreeItem*> Children;
   
   //Wyświetlanie w QT zależy od parenta
+#pragma db transient
   TreeItem* Parent; 
 
   TreeItem(TreeItem* parent=NULL);

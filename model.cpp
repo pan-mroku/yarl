@@ -39,6 +39,7 @@ void Model::LoadDatabase(const QString& filename)
  //ograniczam się do jednej bazy
   Root=r.begin()->Copy();
 
+
   t.commit();
   //std::cout<<*Root<<std::endl;
 }
@@ -127,6 +128,18 @@ void Model::Erase(const QModelIndex& index)
   db.update(*parent);
   t.commit();
   delete item;
+}
+
+void Model::AddArtist(Artist* artist)
+{
+  TreeItem* newNode=dynamic_cast<Library*>(Root)->AddArtist(artist);
+
+  odb::sqlite::database db(DatabaseFilename.toStdString(), SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE);
+  odb::core::transaction t (db.begin ());
+
+  newNode->Persist(db);
+  db.update(*(newNode->Parent));
+  t.commit();
 }
 
 std::ostream& operator<<(std::ostream& out, const Model& model)

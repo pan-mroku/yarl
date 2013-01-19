@@ -15,12 +15,6 @@
 #include "library-odb.hxx"
 #include "treeitem.hpp"
 #include "treeitem-odb.hxx"
-//#include "artist.hpp"
-//#include "artist-odb.hxx"
-//#include "album.hpp"
-//#include "album-odb.hxx"
-
-//#include "rootitem.hpp"
 
 class Model:public QAbstractItemModel
 {
@@ -38,6 +32,7 @@ public:
   int columnCount ( const QModelIndex & parent = QModelIndex() ) const;
   QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
   void Erase(const QModelIndex& index);
+  void AddArtist(Artist* artist);
 
 
   friend std::ostream& operator<<(std::ostream& out, const Model& model);

@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QStandardItemModel>
 
+#include "artist.hpp"
+
 namespace Ui {
   class Dialog;
 }
@@ -16,6 +18,7 @@ public:
   explicit Dialog(QWidget *parent = 0);
   ~Dialog();
   QStandardItemModel *model;
+  Artist* NewArtist;
 
 public slots:
   void Check();

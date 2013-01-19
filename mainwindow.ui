@@ -33,13 +33,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="SaveButton">
-          <property name="text">
-           <string>Save database</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="NewButton">
           <property name="text">
            <string>Add item</string>
