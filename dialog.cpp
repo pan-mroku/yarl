@@ -9,8 +9,14 @@ Dialog::Dialog(QWidget *parent) :
     ui->setupUi(this);
     this->setLayout(ui->verticalLayout);
     model=new QStandardItemModel();
-    ui->listView->setModel(model);
+    model->setHorizontalHeaderLabels(QStringList({"Title", "Duration"}));
+    ui->tableView->setModel(model);
+    ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+
     connect(ui->AddButton, SIGNAL(clicked()), this, SLOT(AddTrack()));
+    connect(ui->RemoveButton, SIGNAL(clicked()), this, SLOT(DelTrack()));
+    connect(ui->UpButton, SIGNAL(clicked()), this, SLOT(PopTrack()));
+    connect(ui->DownButton, SIGNAL(clicked()), this, SLOT(PushTrack()));
 }
 
 Dialog::~Dialog()
@@ -41,4 +47,38 @@ void Dialog::AddTrack()
 {
   QStandardItem track(2,1);
  model->appendRow(&track);
+}
+
+void Dialog::DelTrack()
+{
+  QModelIndexList indexList=ui->tableView->selectionModel()->selectedIndexes();
+  if(indexList.size()==0)
+    return;
+  model->removeRows(indexList[0].row(),1);
+}
+
+void Dialog::PopTrack()
+{
+  QModelIndexList indexList=ui->tableView->selectionModel()->selectedIndexes();
+  if(indexList.size()==0)
+    return;
+
+  if(indexList[0].row()==0)
+    return;
+
+  QList<QStandardItem*> pushed=model->takeRow(indexList[0].row());
+  model->insertRow(indexList[0].row()-1, pushed);
+}
+
+void Dialog::PushTrack()
+{
+  QModelIndexList indexList=ui->tableView->selectionModel()->selectedIndexes();
+  if(indexList.size()==0)
+    return;
+
+  if(indexList[0].row()==model->rowCount()-1)
+    return;
+
+  QList<QStandardItem*> pushed=model->takeRow(indexList[0].row());
+  model->insertRow(indexList[0].row()+1, pushed);
 }

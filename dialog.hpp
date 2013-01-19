@@ -20,6 +20,9 @@ public:
 public slots:
   void Check();
   void AddTrack();
+  void DelTrack();
+  void PopTrack();
+  void PushTrack();
               
 signals:
   void Ok();
